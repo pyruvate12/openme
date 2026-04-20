@@ -634,6 +634,77 @@ body {
   z-index: 5;
 }
 
+/* Not-yet panel */
+.notyet-card {
+  background: rgba(255,255,255,0.82);
+  backdrop-filter: blur(12px);
+  border-radius: 24px;
+  padding: 40px 36px 36px;
+  box-shadow: 0 20px 48px rgba(0,0,0,0.14), 0 0 0 1px rgba(255,255,255,0.6) inset;
+  border: 1px solid rgba(200,180,150,0.4);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.notyet-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-pink), var(--accent-blue));
+  border-radius: 24px 24px 0 0;
+}
+.notyet-icon { font-size: 3rem; margin-bottom: 8px; display: block; }
+.notyet-title {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1.6rem, 6vw, 2.4rem);
+  font-weight: 700;
+  color: #c04060;
+  margin-bottom: 10px;
+}
+.notyet-sub {
+  font-family: 'Kalam', cursive;
+  font-size: 0.95rem;
+  color: #7a6a58;
+  line-height: 1.8;
+  background: rgba(255,248,235,0.7);
+  border-radius: 12px;
+  padding: 12px 16px;
+  border-left: 3px solid var(--accent-pink);
+  margin-bottom: 22px;
+}
+.countdown-wrap {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+.cd-box {
+  background: linear-gradient(135deg, #fff5f8, #fff0f5);
+  border: 1.5px solid #e0b8cc;
+  border-radius: 14px;
+  padding: 12px 16px;
+  min-width: 64px;
+  box-shadow: 0 4px 12px rgba(192,64,96,0.1);
+}
+.cd-num {
+  font-family: 'Caveat', cursive;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #c04060;
+  line-height: 1;
+  display: block;
+}
+.cd-lbl {
+  font-family: 'Kalam', cursive;
+  font-size: 0.72rem;
+  color: #a08878;
+  display: block;
+  margin-top: 2px;
+}
+
 /* back link */
 .back-link {
   font-family: 'Kalam', cursive;
@@ -750,6 +821,24 @@ body {
 <!-- UI LAYER -->
 <div class="ui-layer">
 
+  <!-- Panel -1: Not yet (date lock) -->
+  <div class="panel" id="panel-notyet">
+    <div class="notyet-card">
+      <span class="notyet-icon">🔒</span>
+      <div class="notyet-title">not yet… 🕰</div>
+      <div class="notyet-sub">
+        this is locked until <strong>26 April 2026</strong> 🎂<br>
+        come back on the day!
+      </div>
+      <div class="countdown-wrap">
+        <div class="cd-box"><span class="cd-num" id="cd-d">--</span><span class="cd-lbl">days</span></div>
+        <div class="cd-box"><span class="cd-num" id="cd-h">--</span><span class="cd-lbl">hours</span></div>
+        <div class="cd-box"><span class="cd-num" id="cd-m">--</span><span class="cd-lbl">mins</span></div>
+        <div class="cd-box"><span class="cd-num" id="cd-s">--</span><span class="cd-lbl">secs</span></div>
+      </div>
+    </div>
+  </div>
+
   <!-- Panel 0: Greeting -->
   <div class="panel active" id="panel-greeting">
     <div class="greeting-card">
@@ -830,6 +919,27 @@ body {
 
 <script>
 (function(){
+  // ── date lock ──
+  const UNLOCK = new Date('2026-04-26T00:00:00');
+  function updateCountdown() {
+    const now = new Date();
+    const diff = UNLOCK - now;
+    if (diff <= 0) return; // unlocked, stop
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-d').textContent = String(d).padStart(2,'0');
+    document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+    document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
+  }
+  if (new Date() < UNLOCK) {
+    showPanel('panel-notyet');
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  }
+
   // ── chalk text on blackboard ──
   const board = document.getElementById('board');
   const lines = [

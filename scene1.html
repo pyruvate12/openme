@@ -26,7 +26,11 @@
 
 html, body {
   width:100%; height:100vh;
-  background: radial-gradient(circle at 30% 20%, var(--bg-start), var(--bg-end));
+  background:
+    radial-gradient(ellipse at 18% 12%, rgba(255,238,205,0.55) 0%, transparent 48%),
+    radial-gradient(ellipse at 82% 78%, rgba(200,215,235,0.28) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 5%,  rgba(255,245,220,0.35) 0%, transparent 40%),
+    radial-gradient(circle at 40% 55%, var(--bg-start), var(--bg-end));
   overflow:hidden;
   user-select:none;
   -webkit-tap-highlight-color:transparent;
@@ -90,10 +94,10 @@ body::before {
   align-items:center;
   justify-content:center;
   flex-shrink:0;
-  background: rgba(255, 250, 240, 0.2);
+  background: linear-gradient(145deg, rgba(255,252,242,0.28), rgba(245,238,225,0.18));
   border-radius: 44px;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 15px 30px -10px rgba(60, 40, 20, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 18px 36px -12px rgba(60, 40, 20, 0.1), 0 4px 8px -2px rgba(60,40,20,0.05), inset 0 0 0 1px rgba(255, 255, 255, 0.55);
   margin-top: 10px;
   transition: box-shadow 0.4s;
 }
@@ -224,7 +228,10 @@ body::before {
 
 #end {
   position:fixed; inset:0;
-  background: radial-gradient(circle at 70% 30%, #efe6dc, #e2d6ca);
+  background:
+    radial-gradient(ellipse at 20% 15%, rgba(255,240,210,0.5) 0%, transparent 50%),
+    radial-gradient(ellipse at 75% 80%, rgba(210,218,232,0.3) 0%, transparent 50%),
+    radial-gradient(circle at 70% 30%, #efe6dc, #e2d6ca);
   opacity:0;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
   gap: 30px;
@@ -307,7 +314,19 @@ svg {
   transition: filter 0.2s;
 }
 
-/* responsive touch */
+/* system-err cloud */
+#s5cloud {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+@keyframes pixelFlicker {
+  0%,100% { opacity: 0.85; }
+  33%      { opacity: 0.4; }
+  66%      { opacity: 1; }
+}
+#s5cloud .px { animation: pixelFlicker 0.35s steps(1,end) infinite; }
+
+
 @media (max-height: 600px) {
   .visual { height:170px; max-width:320px; }
   .dia { min-height:130px; padding: 12px 16px; }
@@ -454,7 +473,39 @@ const SCENES = [
   },
   {
     label: 'class 9 · stayback',
-    svg: () => `<svg id="s4" width="320" height="195" viewBox="0 0 320 195" xmlns="http://www.w3.org/2000/svg">
+    svg: () => `<svg width="320" height="195" viewBox="0 0 320 195" xmlns="http://www.w3.org/2000/svg">
+      <line x1="20" y1="182" x2="300" y2="182" stroke="#d4c8b2" stroke-width="1" opacity="0.4"/>
+      <!-- window - warm late-afternoon light -->
+      <rect x="255" y="26" width="38" height="52" rx="3" fill="none" stroke="#d4c8b2" stroke-width="1" opacity="0.55"/>
+      <rect x="255" y="26" width="38" height="52" rx="3" fill="#fae8b8" opacity="0.14"/>
+      <line x1="274" y1="26" x2="274" y2="78" stroke="#d4c8b2" stroke-width="0.7" opacity="0.45"/>
+      <line x1="255" y1="52" x2="293" y2="52" stroke="#d4c8b2" stroke-width="0.7" opacity="0.45"/>
+      <!-- soft light cast from window -->
+      <ellipse cx="200" cy="175" rx="80" ry="8" fill="#f5dfa0" opacity="0.10"/>
+      <!-- desk -->
+      <rect x="80" y="140" width="96" height="8" rx="3" fill="#c4b8a0"/>
+      <rect x="87"  y="148" width="7" height="22" rx="2" fill="#b8ac94"/>
+      <rect x="162" y="148" width="7" height="22" rx="2" fill="#b8ac94"/>
+      <!-- paper/notebook on desk -->
+      <rect x="98" y="130" width="28" height="20" rx="2" fill="#ede3d5" opacity="0.85"/>
+      <line x1="102" y1="136" x2="122" y2="136" stroke="#cfc3b0" stroke-width="0.8" opacity="0.7"/>
+      <line x1="102" y1="140" x2="122" y2="140" stroke="#cfc3b0" stroke-width="0.8" opacity="0.7"/>
+      <line x1="102" y1="144" x2="118" y2="144" stroke="#cfc3b0" stroke-width="0.8" opacity="0.7"/>
+      <!-- pencil -->
+      <line x1="130" y1="128" x2="136" y2="146" stroke="#b8a890" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+      <!-- A sitting, working -->
+      ${char(118, 95, 'var(--h)', 'var(--hd)', 'neutral', {sitting:true})}
+      <!-- B standing at distance, smiling, noticed A -->
+      ${char(234, 120, 'var(--n)', 'var(--nd)', 'smile')}
+    </svg>`,
+    lines: [
+      { t:'everyone else had left.', cls:'narr' },
+      { sp:'A', t:'just finishing this up...', cls:'lh sm' },
+    ]
+  },
+  {
+    label: '',
+    svg: () => `<svg id="s5" width="320" height="195" viewBox="0 0 320 195" xmlns="http://www.w3.org/2000/svg">
       <rect x="14" y="16" width="32" height="42" rx="2" fill="none" stroke="#d4c8b2" stroke-width="1"/>
       <line x1="14" y1="37" x2="46" y2="37" stroke="#d4c8b2" stroke-width="0.7"/>
       <line x1="30" y1="16" x2="30" y2="58" stroke="#d4c8b2" stroke-width="0.7"/>
@@ -464,10 +515,33 @@ const SCENES = [
       <line x1="256" y1="154" x2="286" y2="154" stroke="#d4c8b2" stroke-width="0.6" opacity="0.4"/>
       ${char(118, 120, 'var(--h)', 'var(--hd)', 'neutral')}
       ${char(198, 120, 'var(--n)', 'var(--nd)', 'smile')}
+      <!-- system-err thought cloud above A -->
+      <g id="s5cloud">
+        <!-- thought bubble dots -->
+        <circle cx="118" cy="100" r="2.2" fill="#fff" opacity="0.92"/>
+        <circle cx="116" cy="93"  r="3.2" fill="#fff" opacity="0.92"/>
+        <!-- cloud puffs -->
+        <ellipse cx="107" cy="78" rx="13" ry="10" fill="#fff" opacity="0.93"/>
+        <ellipse cx="121" cy="73" rx="16" ry="12" fill="#fff" opacity="0.93"/>
+        <ellipse cx="135" cy="78" rx="12" ry="10" fill="#fff" opacity="0.93"/>
+        <rect x="96" y="77" width="50" height="13" rx="2" fill="#fff" opacity="0.93"/>
+        <!-- pixel glitch blocks -->
+        <rect class="px" x="100" y="69" width="4" height="4" fill="#e53e3e"/>
+        <rect class="px" x="104" y="73" width="4" height="4" fill="#a0aec0" style="animation-delay:0.05s"/>
+        <rect class="px" x="108" y="69" width="4" height="4" fill="#e53e3e" style="animation-delay:0.11s"/>
+        <rect class="px" x="112" y="73" width="4" height="4" fill="#718096" style="animation-delay:0.08s"/>
+        <rect class="px" x="116" y="69" width="4" height="4" fill="#a0aec0" style="animation-delay:0.03s"/>
+        <rect class="px" x="120" y="73" width="4" height="4" fill="#e53e3e" style="animation-delay:0.14s"/>
+        <rect class="px" x="124" y="69" width="4" height="4" fill="#718096" style="animation-delay:0.07s"/>
+        <rect class="px" x="128" y="73" width="4" height="4" fill="#e53e3e" style="animation-delay:0.10s"/>
+        <rect class="px" x="132" y="69" width="4" height="4" fill="#a0aec0" style="animation-delay:0.02s"/>
+        <!-- system err label -->
+        <text x="119" y="85" text-anchor="middle" font-family="'Courier New',monospace" font-size="6.8" fill="#c53030" font-weight="bold" letter-spacing="0.6">system err</text>
+      </g>
     </svg>`,
     lines: [
       { sp:'B', t:'may i drop you home?', cls:'ln_' },
-      { t:'...', cls:'pause', glitch:true },
+      { t:'...', cls:'pause', sysErr:true },
       { sp:'A', t:'yeah... ok', cls:'lh' },
     ]
   },
@@ -523,12 +597,16 @@ function showLine() {
   el.innerHTML = inner;
   dia.appendChild(el);
   requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('vis')));
-  if (line.glitch) {
+  if (line.sysErr) {
     setTimeout(() => {
-      const svg = document.getElementById('s4');
-      if (svg) {
-        svg.classList.add('glitch');
-        setTimeout(() => svg.classList.remove('glitch'), 800);
+      const cloud = document.getElementById('s5cloud');
+      if (cloud) {
+        cloud.style.transition = 'opacity 0.25s ease';
+        cloud.style.opacity = '1';
+        setTimeout(() => {
+          cloud.style.transition = 'opacity 0.7s ease';
+          cloud.style.opacity = '0';
+        }, 2000);
       }
     }, 120);
   }

@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>happy birthday 🎂</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Kalam:wght@300;400;700&display=swap');
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --chalk-white: #f5f0e8;
+  --chalk-dim: #d4cfc6;
+  --chalk-faint: rgba(245,240,232,0.35);
+  --board-green: #2d4a3e;
+  --board-dark: #1e3329;
+  --board-edge: #1a2e24;
+  --wood-light: #c8a46e;
+  --wood-mid: #b08a52;
+  --wood-dark: #8b6538;
+  --desk-top: #d4a96a;
+  --desk-shadow: #9e7040;
+  --bench-wood: #c49a5a;
+  --bench-leg: #9a7040;
+  --floor: #b8975a;
+  --wall: #f0e8d8;
+  --accent-pink: #e8a0b0;
+  --accent-blue: #90b8d0;
+}
+
+body {
+  font-family: 'Kalam', cursive;
+  background: var(--wall);
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* ── CLASSROOM SCENE ── */
+.classroom {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* wall */
+.wall {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #ede4d0 0%, #e4d8c0 55%, var(--floor) 55%, #a8834a 100%);
+}
+
+/* floor boards */
+.floor-boards {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 45%;
+}
+.floor-boards::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0px,
+    transparent 78px,
+    rgba(0,0,0,0.08) 78px,
+    rgba(0,0,0,0.08) 80px
+  );
+}
+.floor-boards::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0px,
+    transparent 28px,
+    rgba(0,0,0,0.04) 28px,
+    rgba(0,0,0,0.04) 30px
+  );
+}
+
+/* wall border / wainscoting */
+.wainscot {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 45%;
+  height: 6px;
+  background: linear-gradient(180deg, #c8b898, #d4c4a0, #c0a878);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+/* blackboard */
+.blackboard {
+  position: absolute;
+  top: 4%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(74%, 640px);
+  height: 42%;
+  background: linear-gradient(145deg, var(--board-dark) 0%, var(--board-green) 40%, #2a4539 100%);
+  border-radius: 4px;
+  border: 14px solid var(--wood-mid);
+  box-shadow:
+    0 0 0 2px var(--wood-dark),
+    0 8px 24px rgba(0,0,0,0.35),
+    inset 0 0 40px rgba(0,0,0,0.3),
+    inset 0 0 0 1px rgba(255,255,255,0.04);
+  overflow: hidden;
+}
+
+.blackboard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(180deg, transparent 0px, transparent 30px, rgba(255,255,255,0.02) 30px, rgba(255,255,255,0.02) 31px);
+  pointer-events: none;
+}
+
+/* chalk ledge */
+.chalk-ledge {
+  position: absolute;
+  top: 4%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(74%, 640px);
+  margin-top: calc(42% + 8px);
+  height: 18px;
+  background: linear-gradient(180deg, var(--wood-light), var(--wood-mid));
+  border-radius: 0 0 3px 3px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 2;
+}
+
+/* chalk pieces */
+.chalk-piece {
+  position: absolute;
+  bottom: 0;
+  width: 28px;
+  height: 10px;
+  background: linear-gradient(180deg, #f5f0e8, #e8e0d0);
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+/* teacher desk */
+.teacher-desk {
+  position: absolute;
+  bottom: 44%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(52%, 420px);
+  z-index: 3;
+}
+
+.desk-top {
+  height: 28px;
+  background: linear-gradient(180deg, #deb878, var(--desk-top) 40%, #c49050);
+  border-radius: 4px 4px 0 0;
+  box-shadow:
+    0 -2px 6px rgba(0,0,0,0.1),
+    inset 0 1px 0 rgba(255,255,255,0.3);
+  position: relative;
+}
+.desk-top::after {
+  content: '';
+  position: absolute;
+  inset: 4px 12px;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  pointer-events: none;
+}
+
+.desk-front {
+  height: 52px;
+  background: linear-gradient(180deg, #c49050, var(--desk-shadow));
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.22);
+  position: relative;
+}
+.desk-front::before {
+  content: '';
+  position: absolute;
+  left: 18%; right: 18%;
+  top: 8px; bottom: 8px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 2px;
+}
+
+/* items on desk */
+.desk-items {
+  position: absolute;
+  top: -24px;
+  left: 0; right: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  padding: 0 24px;
+}
+
+/* book stack */
+.book { width: 18px; height: 28px; border-radius: 1px; box-shadow: 1px 1px 3px rgba(0,0,0,0.2); }
+
+/* apple */
+.apple {
+  width: 18px;
+  height: 20px;
+  background: radial-gradient(circle at 35% 35%, #f06060, #c03030);
+  border-radius: 50% 50% 45% 45%;
+  position: relative;
+}
+.apple::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px; height: 7px;
+  background: #5a3a1a;
+  border-radius: 1px;
+}
+
+/* student benches */
+.benches-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+  height: 44%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0;
+  padding-bottom: 2%;
+}
+
+.bench-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 6px;
+}
+
+.bench {
+  position: relative;
+}
+
+.bench-surface {
+  height: 14px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #dbb870, var(--bench-wood));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 1px 3px rgba(0,0,0,0.15);
+  position: relative;
+}
+.bench-surface::after {
+  content: '';
+  position: absolute;
+  inset: 3px 10px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+.bench-legs {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 8px;
+}
+.bench-leg {
+  width: 6px;
+  height: 22px;
+  background: linear-gradient(180deg, var(--bench-leg), #7a5530);
+  border-radius: 0 0 2px 2px;
+}
+
+/* tiny stick figures on benches */
+.figure {
+  position: absolute;
+  top: -34px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+.fig-head { width: 10px; height: 10px; border-radius: 50%; }
+.fig-body { width: 2px; height: 10px; }
+.fig-arms {
+  position: absolute;
+  top: 11px;
+  width: 20px;
+  height: 2px;
+  border-radius: 1px;
+}
+
+/* ── UI OVERLAY ── */
+.ui-layer {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* PANELS */
+.panel {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 480px;
+  width: 100%;
+}
+.panel.active { display: flex; }
+
+/* Greeting card */
+.greeting-card {
+  background: rgba(255,255,255,0.82);
+  backdrop-filter: blur(12px);
+  border-radius: 24px;
+  padding: 40px 36px 36px;
+  box-shadow:
+    0 20px 48px rgba(0,0,0,0.14),
+    0 0 0 1px rgba(255,255,255,0.6) inset;
+  border: 1px solid rgba(200,180,150,0.4);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.greeting-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--accent-pink), var(--accent-blue), var(--accent-pink));
+  border-radius: 24px 24px 0 0;
+}
+
+.big-birthday {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(2rem, 7vw, 3.2rem);
+  font-weight: 700;
+  color: #c04060;
+  line-height: 1.1;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 8px rgba(192,64,96,0.15);
+}
+
+.note-text {
+  font-family: 'Kalam', cursive;
+  font-size: clamp(0.9rem, 3vw, 1.05rem);
+  color: #7a6a58;
+  line-height: 1.8;
+  margin: 14px 0 24px;
+  background: rgba(255,248,235,0.7);
+  border-radius: 12px;
+  padding: 14px 18px;
+  border-left: 3px solid var(--accent-pink);
+}
+
+.note-text strong {
+  color: #5a4a38;
+  font-weight: 700;
+}
+
+.play-btn {
+  font-family: 'Caveat', cursive;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(135deg, #c04060, #e06080);
+  border: none;
+  border-radius: 50px;
+  padding: 14px 44px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(192,64,96,0.35), 0 2px 0 #a03050;
+  transition: transform 0.15s, box-shadow 0.15s;
+  letter-spacing: 0.03em;
+  position: relative;
+  overflow: hidden;
+}
+.play-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+  border-radius: inherit;
+  pointer-events: none;
+}
+.play-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(192,64,96,0.4), 0 2px 0 #a03050; }
+.play-btn:active { transform: translateY(0); }
+
+/* Password panel */
+.pass-card {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px);
+  border-radius: 24px;
+  padding: 38px 34px 34px;
+  box-shadow: 0 20px 48px rgba(0,0,0,0.14), 0 0 0 1px rgba(255,255,255,0.6) inset;
+  border: 1px solid rgba(200,180,150,0.4);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.pass-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-pink), var(--accent-blue));
+  border-radius: 24px 24px 0 0;
+}
+
+.lock-icon {
+  font-size: 2.8rem;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.pass-title {
+  font-family: 'Caveat', cursive;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #5a4a6a;
+  margin-bottom: 6px;
+}
+
+.pass-hint {
+  font-family: 'Kalam', cursive;
+  font-size: 0.9rem;
+  color: #9a8880;
+  margin-bottom: 18px;
+  line-height: 1.6;
+}
+
+.emoji-input-wrap {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.emoji-slot {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  border: 2px solid #d4c8bc;
+  background: #fffaf4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.06);
+}
+.emoji-slot.filled { border-color: #c04060; box-shadow: 0 0 0 3px rgba(192,64,96,0.12); }
+.emoji-slot.shake { animation: shake 0.4s ease; }
+
+@keyframes shake {
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-6px)}
+  40%{transform:translateX(6px)}
+  60%{transform:translateX(-4px)}
+  80%{transform:translateX(4px)}
+}
+
+.emoji-keyboard {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.ek-btn {
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+  border: 1.5px solid #e0d4c8;
+  background: white;
+  font-size: 1.7rem;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s, background 0.1s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08), 0 1px 0 #d0c4b8;
+  display: flex; align-items: center; justify-content: center;
+}
+.ek-btn:hover { background: #fff5f0; transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,0.12); }
+.ek-btn:active { transform: translateY(0); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+.clear-btn {
+  font-family: 'Kalam', cursive;
+  font-size: 0.85rem;
+  color: #a09080;
+  background: none;
+  border: 1px solid #d4c8bc;
+  border-radius: 20px;
+  padding: 6px 18px;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+  margin-bottom: 8px;
+}
+.clear-btn:hover { color: #c04060; background: rgba(192,64,96,0.05); }
+
+.pass-error {
+  font-family: 'Kalam', cursive;
+  font-size: 0.9rem;
+  color: #c04060;
+  min-height: 22px;
+  margin-top: 4px;
+  transition: opacity 0.3s;
+}
+
+/* Parts panel */
+.parts-card {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px);
+  border-radius: 24px;
+  padding: 38px 34px 34px;
+  box-shadow: 0 20px 48px rgba(0,0,0,0.14), 0 0 0 1px rgba(255,255,255,0.6) inset;
+  border: 1px solid rgba(200,180,150,0.4);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.parts-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #f0b060, var(--accent-pink), var(--accent-blue));
+  border-radius: 24px 24px 0 0;
+}
+
+.parts-title {
+  font-family: 'Caveat', cursive;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #c04060;
+  margin-bottom: 6px;
+}
+.parts-sub {
+  font-family: 'Kalam', cursive;
+  font-size: 0.92rem;
+  color: #9a8880;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.parts-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+.part-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 22px;
+  border-radius: 16px;
+  border: 1.5px solid;
+  background: white;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  text-decoration: none;
+  text-align: left;
+  width: 100%;
+}
+.part-btn:hover { transform: translateY(-2px); }
+.part-btn:active { transform: translateY(0); }
+
+.part-btn.p1 { border-color: #e0b8cc; box-shadow: 0 4px 14px rgba(224,184,204,0.25); }
+.part-btn.p1:hover { box-shadow: 0 8px 22px rgba(224,184,204,0.4); }
+.part-btn.p2 { border-color: #9abdd6; box-shadow: 0 4px 14px rgba(154,189,214,0.25); }
+.part-btn.p2:hover { box-shadow: 0 8px 22px rgba(154,189,214,0.4); }
+.part-btn.p3 { border-color: #f0c080; box-shadow: 0 4px 14px rgba(240,192,128,0.25); }
+.part-btn.p3:hover { box-shadow: 0 8px 22px rgba(240,192,128,0.4); }
+
+.part-num {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Caveat', cursive;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+}
+.p1 .part-num { background: linear-gradient(135deg, #c297b3, #e0b8cc); }
+.p2 .part-num { background: linear-gradient(135deg, #7ea3be, #9abdd6); }
+.p3 .part-num { background: linear-gradient(135deg, #d4a060, #f0c080); }
+
+.part-info { flex: 1; }
+.part-label {
+  font-family: 'Caveat', cursive;
+  font-size: 1.25rem;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 2px;
+}
+.p1 .part-label { color: #c297b3; }
+.p2 .part-label { color: #7ea3be; }
+.p3 .part-label { color: #c49050; }
+
+.part-desc {
+  font-family: 'Kalam', cursive;
+  font-size: 0.82rem;
+  color: #a09080;
+  display: block;
+}
+
+.part-arrow {
+  font-size: 1.1rem;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+/* confetti dots */
+.confetti {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Not-yet panel */
+.notyet-card {
+  background: rgba(255,255,255,0.82);
+  backdrop-filter: blur(12px);
+  border-radius: 24px;
+  padding: 40px 36px 36px;
+  box-shadow: 0 20px 48px rgba(0,0,0,0.14), 0 0 0 1px rgba(255,255,255,0.6) inset;
+  border: 1px solid rgba(200,180,150,0.4);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.notyet-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-pink), var(--accent-blue));
+  border-radius: 24px 24px 0 0;
+}
+.notyet-icon { font-size: 3rem; margin-bottom: 8px; display: block; }
+.notyet-title {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1.6rem, 6vw, 2.4rem);
+  font-weight: 700;
+  color: #c04060;
+  margin-bottom: 10px;
+}
+.notyet-sub {
+  font-family: 'Kalam', cursive;
+  font-size: 0.95rem;
+  color: #7a6a58;
+  line-height: 1.8;
+  background: rgba(255,248,235,0.7);
+  border-radius: 12px;
+  padding: 12px 16px;
+  border-left: 3px solid var(--accent-pink);
+  margin-bottom: 22px;
+}
+.countdown-wrap {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+.cd-box {
+  background: linear-gradient(135deg, #fff5f8, #fff0f5);
+  border: 1.5px solid #e0b8cc;
+  border-radius: 14px;
+  padding: 12px 16px;
+  min-width: 64px;
+  box-shadow: 0 4px 12px rgba(192,64,96,0.1);
+}
+.cd-num {
+  font-family: 'Caveat', cursive;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #c04060;
+  line-height: 1;
+  display: block;
+}
+.cd-lbl {
+  font-family: 'Kalam', cursive;
+  font-size: 0.72rem;
+  color: #a08878;
+  display: block;
+  margin-top: 2px;
+}
+
+/* back link */
+.back-link {
+  font-family: 'Kalam', cursive;
+  font-size: 0.85rem;
+  color: #a09080;
+  background: rgba(255,255,255,0.5);
+  border: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 14px;
+  transition: color 0.15s;
+}
+.back-link:hover { color: #5a4a38; }
+
+/* ── MOBILE RESPONSIVE ── */
+@media (max-width: 480px) {
+  .ui-layer {
+    padding: 12px;
+    align-items: center;
+  }
+  .panel { max-width: 100%; }
+
+  .greeting-card,
+  .pass-card,
+  .parts-card,
+  .notyet-card {
+    padding: 28px 18px 22px;
+    border-radius: 18px;
+  }
+
+  .countdown-wrap { gap: 8px; }
+  .cd-box { min-width: 54px; padding: 10px; border-radius: 10px; }
+  .cd-num { font-size: 1.6rem; }
+  .cd-lbl { font-size: 0.65rem; }
+
+  .emoji-slot { width: 46px; height: 46px; font-size: 1.4rem; }
+  .emoji-keyboard { gap: 8px; }
+  .ek-btn { width: 48px; height: 48px; font-size: 1.5rem; }
+
+  .part-btn { padding: 13px 14px; gap: 10px; }
+  .part-num { width: 34px; height: 34px; font-size: 1.1rem; }
+
+  .play-btn { padding: 12px 32px; font-size: 1.15rem; }
+  .note-text { font-size: 0.88rem; padding: 12px; }
+
+  .blackboard { height: 34%; top: 3%; }
+  .bench-row { gap: 10px; }
+}
+
+@media (max-width: 360px) {
+  .ek-btn { width: 42px; height: 42px; font-size: 1.3rem; }
+  .emoji-slot { width: 40px; height: 40px; font-size: 1.25rem; }
+  .greeting-card, .pass-card, .parts-card, .notyet-card {
+    padding: 22px 14px 18px;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<!-- CLASSROOM BACKGROUND -->
+<div class="classroom">
+  <div class="wall"></div>
+  <div class="floor-boards"></div>
+  <div class="wainscot"></div>
+
+  <!-- Blackboard -->
+  <div class="blackboard" id="board"></div>
+  <div class="chalk-ledge">
+    <div class="chalk-piece" style="left:12%; background:linear-gradient(180deg,#f5f0e8,#e0dcd0);"></div>
+    <div class="chalk-piece" style="left:26%; width:20px; background:linear-gradient(180deg,#f8d0b0,#e8b898);"></div>
+    <div class="chalk-piece" style="right:18%;"></div>
+  </div>
+
+  <!-- Teacher's desk -->
+  <div class="teacher-desk">
+    <div class="desk-items">
+      <div class="book" style="background:linear-gradient(135deg,#c06060,#a04040);transform:rotate(-4deg);"></div>
+      <div class="book" style="background:linear-gradient(135deg,#6080b0,#405090);transform:rotate(2deg);height:22px;"></div>
+      <div class="apple"></div>
+      <div class="book" style="background:linear-gradient(135deg,#608060,#406040);transform:rotate(-2deg);height:20px;"></div>
+    </div>
+    <div class="desk-top"></div>
+    <div class="desk-front"></div>
+  </div>
+
+  <!-- Student benches -->
+  <div class="benches-wrap">
+    <div class="bench-row">
+      <div class="bench" style="width:140px">
+        <div class="figure" style="left:20px">
+          <div class="fig-head" style="background:#9abdd6;"></div>
+          <div class="fig-body" style="background:#7090a8;"></div>
+          <div class="fig-arms" style="background:#7090a8;"></div>
+        </div>
+        <div class="figure" style="right:20px">
+          <div class="fig-head" style="background:#e0b8cc;"></div>
+          <div class="fig-body" style="background:#b89ab0;"></div>
+          <div class="fig-arms" style="background:#b89ab0;"></div>
+        </div>
+        <div class="bench-surface"></div>
+        <div class="bench-legs"><div class="bench-leg"></div><div class="bench-leg"></div></div>
+      </div>
+      <div class="bench" style="width:140px">
+        <div class="figure" style="left:20px">
+          <div class="fig-head" style="background:#d4a878;"></div>
+          <div class="fig-body" style="background:#a88060;"></div>
+          <div class="fig-arms" style="background:#a88060;"></div>
+        </div>
+        <div class="figure" style="right:20px">
+          <div class="fig-head" style="background:#9abdd6;"></div>
+          <div class="fig-body" style="background:#7090a8;"></div>
+          <div class="fig-arms" style="background:#7090a8;"></div>
+        </div>
+        <div class="bench-surface"></div>
+        <div class="bench-legs"><div class="bench-leg"></div><div class="bench-leg"></div></div>
+      </div>
+    </div>
+    <div class="bench-row">
+      <div class="bench" style="width:160px">
+        <div class="figure" style="left:16px">
+          <div class="fig-head" style="background:#e0b8cc;"></div>
+          <div class="fig-body" style="background:#b89ab0;"></div>
+          <div class="fig-arms" style="background:#b89ab0;"></div>
+        </div>
+        <div class="figure" style="right:16px">
+          <div class="fig-head" style="background:#c8a060;"></div>
+          <div class="fig-body" style="background:#a08040;"></div>
+          <div class="fig-arms" style="background:#a08040;"></div>
+        </div>
+        <div class="bench-surface"></div>
+        <div class="bench-legs"><div class="bench-leg"></div><div class="bench-leg"></div></div>
+      </div>
+      <div class="bench" style="width:160px">
+        <div class="figure" style="left:16px">
+          <div class="fig-head" style="background:#9abdd6;"></div>
+          <div class="fig-body" style="background:#7090a8;"></div>
+          <div class="fig-arms" style="background:#7090a8;"></div>
+        </div>
+        <div class="figure" style="right:16px">
+          <div class="fig-head" style="background:#e0b8cc;"></div>
+          <div class="fig-body" style="background:#b89ab0;"></div>
+          <div class="fig-arms" style="background:#b89ab0;"></div>
+        </div>
+        <div class="bench-surface"></div>
+        <div class="bench-legs"><div class="bench-leg"></div><div class="bench-leg"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Confetti canvas -->
+<canvas class="confetti" id="confetti"></canvas>
+
+<!-- UI LAYER -->
+<div class="ui-layer">
+
+  <!-- Panel -1: Not yet (date lock) -->
+  <div class="panel" id="panel-notyet">
+    <div class="notyet-card">
+      <span class="notyet-icon">🔒</span>
+      <div class="notyet-title">not yet… 🕰</div>
+      <div class="notyet-sub">
+        this is locked until <strong>26 April 2026</strong> 🎂<br>
+        come back on the day!
+      </div>
+      <div class="countdown-wrap">
+        <div class="cd-box"><span class="cd-num" id="cd-d">--</span><span class="cd-lbl">days</span></div>
+        <div class="cd-box"><span class="cd-num" id="cd-h">--</span><span class="cd-lbl">hours</span></div>
+        <div class="cd-box"><span class="cd-num" id="cd-m">--</span><span class="cd-lbl">mins</span></div>
+        <div class="cd-box"><span class="cd-num" id="cd-s">--</span><span class="cd-lbl">secs</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel 0: Greeting -->
+  <div class="panel active" id="panel-greeting">
+    <div class="greeting-card">
+      <div class="big-birthday">🎂 happy birthday! 🎉</div>
+      <div class="note-text">
+        hey! before you tap play —<br>
+        <strong>please only open this when you have 15–30 mins free</strong> 🕐<br><br>
+        this is something made just for you,<br>
+        best enjoyed without rushing ✨
+      </div>
+      <button class="play-btn" onclick="showPass()">▶ &nbsp; play</button>
+    </div>
+  </div>
+
+  <!-- Panel 1: Password -->
+  <div class="panel" id="panel-pass">
+    <div class="pass-card">
+      <span class="lock-icon">🔐</span>
+      <div class="pass-title">secret knock</div>
+      <div class="pass-hint">enter the password using the emojis below<br><span style="color:#b0a098;font-size:0.8rem"></span></div>
+
+      <div class="emoji-input-wrap" id="emoji-slots">
+        <div class="emoji-slot" id="sl0"></div>
+        <div class="emoji-slot" id="sl1"></div>
+        <div class="emoji-slot" id="sl2"></div>
+      </div>
+
+      <div class="emoji-keyboard">
+        <button class="ek-btn" onclick="_ep('😊')">😊</button>
+        <button class="ek-btn" onclick="_ep('😄')">😄</button>
+        <button class="ek-btn" onclick="_ep('😁')">😁</button>
+        <button class="ek-btn" onclick="_ep('🙂')">🙂</button>
+        <button class="ek-btn" onclick="_ep('😀')">😀</button>
+      </div>
+
+      <button class="clear-btn" onclick="_ec()">✕ clear</button>
+      <div class="pass-error" id="pass-err"></div>
+      <button class="back-link" onclick="showGreeting()">← back</button>
+    </div>
+  </div>
+
+  <!-- Panel 2: Parts -->
+  <div class="panel" id="panel-parts">
+    <div class="parts-card">
+      <div class="parts-title">🎁 your gift has 3 parts</div>
+      <div class="parts-sub">tap any part to open it whenever you're ready 💌</div>
+      <div class="parts-grid">
+        <a class="part-btn p1" href="scene1.html" target="_blank">
+          <div class="part-num">1</div>
+          <div class="part-info">
+            <span class="part-label">Part 1</span>
+            <span class="part-desc">where it all began ✦</span>
+          </div>
+          <span class="part-arrow">→</span>
+        </a>
+        <a class="part-btn p2" href="scene2.html" target="_blank">
+          <div class="part-num">2</div>
+          <div class="part-info">
+            <span class="part-label">Part 2</span>
+            <span class="part-desc">the in-between moments ✦</span>
+          </div>
+          <span class="part-arrow">→</span>
+        </a>
+        <a class="part-btn p3" href="scene3.html" target="_blank">
+          <div class="part-num">3</div>
+          <div class="part-info">
+            <span class="part-label">Part 3</span>
+            <span class="part-desc">for the birthday itself 🎂</span>
+          </div>
+          <span class="part-arrow">→</span>
+        </a>
+      </div>
+      <button class="back-link" onclick="showGreeting()">← back to start</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  // ── date lock ──
+  const UNLOCK = new Date('2026-04-26T00:00:00');
+  function updateCountdown() {
+    const now = new Date();
+    const diff = UNLOCK - now;
+    if (diff <= 0) return; // unlocked, stop
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-d').textContent = String(d).padStart(2,'0');
+    document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+    document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
+  }
+  if (new Date() < UNLOCK) {
+    showPanel('panel-notyet');
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  }
+
+  // ── chalk text on blackboard ──
+  const board = document.getElementById('board');
+  const isLocked = new Date() < UNLOCK;
+
+  // Add frozen flicker keyframe for locked state
+  if (isLocked) {
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes frozenFlicker {
+        0%,100%{ opacity:0.68; }
+        18%{ opacity:0.45; }
+        20%{ opacity:0.70; }
+        55%{ opacity:0.60; }
+        57%{ opacity:0.72; }
+        80%{ opacity:0.50; }
+        82%{ opacity:0.66; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  const lines = isLocked ? [
+    { txt: 'stuck in time…', y: '50%', size: 'clamp(1.1rem,4.5vw,1.6rem)', weight: '700', opacity: 0.68, frozen: true },
+  ] : [
+    { txt: 'happy 17th birthday', y: '32%', size: 'clamp(1rem,3.5vw,1.45rem)', weight: '700', opacity: 0.72 },
+    { txt: 'hiii', y: '54%', size: 'clamp(0.8rem,2.5vw,1rem)', weight: '400', opacity: 0.5 },
+    { txt: 'make a wish 🕯', y: '72%', size: 'clamp(0.72rem,2vw,0.85rem)', weight: '400', opacity: 0.38 },
+  ];
+
+  lines.forEach(l => {
+    const d = document.createElement('div');
+    d.style.cssText = `
+      position:absolute; left:0; right:0; top:${l.y}; transform:translateY(-50%);
+      font-family:'Caveat',cursive; font-size:${l.size}; font-weight:${l.weight};
+      color:rgba(245,240,232,${l.opacity}); text-align:center; letter-spacing:0.04em;
+      text-shadow:0 0 8px rgba(245,240,232,0.2);
+      pointer-events:none; user-select:none;
+      ${l.frozen ? 'animation:frozenFlicker 3.8s ease-in-out infinite;' : ''}
+    `;
+    d.textContent = l.txt;
+    board.appendChild(d);
+  });
+
+  // ── password logic (obfuscated) ──
+  const _k = [0x1f60a, 0x1f60a, 0x1f60a]; 
+  let _buf = [];
+
+  window._ep = function(e) {
+    if (_buf.length >= 3) return;
+    _buf.push(e);
+    const idx = _buf.length - 1;
+    const sl = document.getElementById('sl' + idx);
+    sl.textContent = e;
+    sl.classList.add('filled');
+    document.getElementById('pass-err').textContent = '';
+    if (_buf.length === 3) { setTimeout(_chk, 260); }
+  };
+
+  window._ec = function() {
+    _buf = [];
+    for (let i = 0; i < 3; i++) {
+      const sl = document.getElementById('sl' + i);
+      sl.textContent = '';
+      sl.classList.remove('filled', 'shake');
+    }
+    document.getElementById('pass-err').textContent = '';
+  };
+
+  function _chk() {
+    const ok = _buf.every((c, i) => c.codePointAt(0) === _k[i]);
+    if (ok) {
+      showParts();
+      launchConfetti();
+    } else {
+      document.getElementById('pass-err').textContent = 'not quite… try again 🤍';
+      ['sl0','sl1','sl2'].forEach(id => {
+        const el = document.getElementById(id);
+        el.classList.add('shake');
+        setTimeout(() => el.classList.remove('shake'), 450);
+      });
+      setTimeout(_ec, 700);
+    }
+  }
+
+  // ── panel transitions ──
+  function showPanel(id) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+  window.showGreeting = () => showPanel('panel-greeting');
+  window.showPass = () => { _ec(); showPanel('panel-pass'); };
+  window.showParts = () => showPanel('panel-parts');
+
+  // ── confetti ──
+  function launchConfetti() {
+    const cvs = document.getElementById('confetti');
+    const ctx = cvs.getContext('2d');
+    cvs.width = window.innerWidth;
+    cvs.height = window.innerHeight;
+    const colors = ['#e0b8cc','#9abdd6','#f0c080','#b8d8a0','#f5a0b0','#a0c8e8'];
+    const pts = Array.from({length: 80}, () => ({
+      x: Math.random() * cvs.width,
+      y: -10 - Math.random() * 80,
+      r: 3 + Math.random() * 5,
+      c: colors[Math.floor(Math.random() * colors.length)],
+      vx: (Math.random() - 0.5) * 2.5,
+      vy: 1.5 + Math.random() * 3,
+      rot: Math.random() * 360,
+      vr: (Math.random() - 0.5) * 4,
+      alpha: 1
+    }));
+    let frame = 0;
+    function step() {
+      ctx.clearRect(0, 0, cvs.width, cvs.height);
+      pts.forEach(p => {
+        p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+        if (frame > 80) p.alpha -= 0.012;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot * Math.PI / 180);
+        ctx.globalAlpha = Math.max(0, p.alpha);
+        ctx.fillStyle = p.c;
+        ctx.fillRect(-p.r, -p.r/2, p.r*2, p.r);
+        ctx.restore();
+      });
+      frame++;
+      if (frame < 160) requestAnimationFrame(step);
+      else ctx.clearRect(0, 0, cvs.width, cvs.height);
+    }
+    step();
+  }
+})();
+</script>
+</body>
+</html>

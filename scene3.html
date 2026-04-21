@@ -266,6 +266,62 @@ body::before {
     height: 160px;
   }
 }
+
+#end-splash {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 60% 40%, #fdf3ea, #ecdfd4);
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 40;
+  transition: opacity 2.2s ease;
+  border-radius: 52px;
+}
+#end-splash.on {
+  opacity: 1;
+  pointer-events: all;
+}
+#splash-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 1.2s ease 0.6s, transform 1.2s ease 0.6s;
+}
+#end-splash.on #splash-content {
+  opacity: 1;
+  transform: scale(1);
+}
+#home-btn {
+  display: inline-block;
+  font: 13px/1 'Courier New', monospace;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #5e4e44;
+  background: rgba(255, 250, 240, 0.65);
+  backdrop-filter: blur(8px);
+  padding: 14px 36px;
+  border-radius: 48px;
+  border: 1px solid rgba(180, 150, 130, 0.3);
+  box-shadow: 0 8px 18px -6px rgba(60, 40, 20, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+#home-btn:hover {
+  background: rgba(255, 255, 250, 0.85);
+  box-shadow: 0 12px 24px -8px rgba(60, 40, 20, 0.15);
+  border-color: rgba(150, 120, 100, 0.4);
+}
+#home-btn:active {
+  transform: scale(0.98);
+}
 </style>
 </head>
 <body>
@@ -274,6 +330,12 @@ body::before {
 <div id="wrap">
   <div id="dots"></div>
   <div id="stage"></div>
+  <div id="end-splash">
+    <div id="splash-content">
+      <div style="font: italic 20px/1.7 Georgia, serif; color: #7a6a60; text-align:center; padding: 0 24px;">the end 🎈</div>
+      <button id="home-btn" onclick="window.location.href='https://pyruvate12.github.io/openme/'" ontouchend="this._tapped=true;window.location.href='https://pyruvate12.github.io/openme/';">↩ Back to Home</button>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -473,6 +535,10 @@ body::before {
         busy = false;
         goScene(cur);
       }, 950);
+    } else {
+      // last scene done — show end splash
+      const endSplash = document.getElementById('end-splash');
+      if (endSplash) endSplash.classList.add('on');
     }
   }
 
@@ -489,6 +555,13 @@ body::before {
       advance();
     }
   });
+
+  // Prevent home button from triggering advance()
+  const homeBtn = document.getElementById('home-btn');
+  if (homeBtn) {
+    homeBtn.addEventListener('click', e => e.stopPropagation());
+    homeBtn.addEventListener('touchend', e => { e.stopPropagation(); }, { passive: false });
+  }
 
   goScene(0);
 })();

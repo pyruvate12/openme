@@ -259,7 +259,7 @@ body::before {
 }
 #end.on #endtext { opacity:1; }
 
-#play-part2-btn {
+#play-part2-btn, #home-btn {
   display: inline-block;
   font: 13px/1 'Courier New', monospace;
   letter-spacing: 0.2em;
@@ -276,17 +276,27 @@ body::before {
   transition: opacity 1.2s ease 1.8s, transform 0.2s ease, box-shadow 0.2s ease;
   transform: translateY(4px);
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
-#end.on #play-part2-btn {
+#end.on #play-part2-btn, #end.on #home-btn {
   opacity: 1;
   transform: translateY(0);
 }
-#play-part2-btn:hover {
+#home-btn {
+  transition: opacity 1.2s ease 2.1s, transform 0.2s ease, box-shadow 0.2s ease;
+  font-size: 11px;
+  padding: 11px 28px;
+  color: #7f7a73;
+  background: rgba(245, 240, 232, 0.45);
+  border-color: rgba(180, 160, 140, 0.2);
+}
+#play-part2-btn:hover, #home-btn:hover {
   background: rgba(255, 255, 250, 0.85);
   box-shadow: 0 12px 24px -8px rgba(60, 40, 20, 0.15);
   border-color: rgba(150, 120, 100, 0.4);
 }
-#play-part2-btn:active {
+#play-part2-btn:active, #home-btn:active {
   transform: scale(0.98);
 }
 
@@ -343,7 +353,8 @@ svg {
 <div id="hint"></div>
 <div id="end">
   <div id="endtext">vadapav still remaining lol !</div>
-  <a href="scene2.html" id="play-part2-btn">▶ Play Part 2</a>
+  <button id="play-part2-btn" onclick="window.location.href='scene2.html'" ontouchend="this._tapped=true;window.location.href='scene2.html';">▶ Play Part 2</button>
+  <button id="home-btn" onclick="window.location.href='https://pyruvate12.github.io/openme/'" ontouchend="this._tapped=true;window.location.href='https://pyruvate12.github.io/openme/';">↩ Back to Home</button>
 </div>
 
 <script>
@@ -639,6 +650,14 @@ document.addEventListener('click', advance);
 document.addEventListener('touchend', e => { e.preventDefault(); advance(); }, { passive:false });
 document.addEventListener('keydown', e => {
   if (['Enter', ' ', 'ArrowRight'].includes(e.key)) { e.preventDefault(); advance(); }
+});
+
+// Prevent nav buttons from triggering advance()
+['play-part2-btn','home-btn'].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener('click', e => e.stopPropagation());
+  el.addEventListener('touchend', e => { e.stopPropagation(); }, { passive:false });
 });
 
 goScene(0);

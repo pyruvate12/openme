@@ -252,7 +252,7 @@ body::before {
   border: 1px solid rgba(220, 200, 180, 0.3);
   box-shadow: 0 20px 30px -10px rgba(40, 20, 0, 0.08);
 }
-#play-part3-btn {
+#play-part3-btn, #home-btn {
   display: inline-block;
   font: 13px/1 'Courier New', monospace;
   letter-spacing: 0.2em;
@@ -267,13 +267,22 @@ body::before {
   text-decoration: none;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
-#play-part3-btn:hover {
+#home-btn {
+  font-size: 11px;
+  padding: 11px 28px;
+  color: #7f7a73;
+  background: rgba(245, 240, 232, 0.45);
+  border-color: rgba(180, 160, 140, 0.2);
+}
+#play-part3-btn:hover, #home-btn:hover {
   background: rgba(255, 255, 250, 0.85);
   box-shadow: 0 12px 24px -8px rgba(60, 40, 20, 0.15);
   border-color: rgba(150, 120, 100, 0.4);
 }
-#play-part3-btn:active {
+#play-part3-btn:active, #home-btn:active {
   transform: scale(0.98);
 }
 
@@ -318,7 +327,8 @@ svg {
   <div id="end-splash">
     <div id="splash-content">
       <div id="splash-message">we all are imperfect<br>that's what makes us human</div>
-      <a href="scene3.html" id="play-part3-btn">▶ Play Part 3</a>
+      <button id="play-part3-btn" onclick="window.location.href='scene3.html'" ontouchend="this._tapped=true;window.location.href='scene3.html';">▶ Play Part 3</button>
+      <button id="home-btn" onclick="window.location.href='https://pyruvate12.github.io/openme/'" ontouchend="this._tapped=true;window.location.href='https://pyruvate12.github.io/openme/';">↩ Back to Home</button>
     </div>
   </div>
 </div>
@@ -587,6 +597,14 @@ document.getElementById('wrap').addEventListener('click',advance);
 document.getElementById('wrap').addEventListener('touchend',e=>{e.preventDefault();advance();},{passive:false});
 document.addEventListener('keydown',e=>{
   if(['Enter',' ','ArrowRight'].includes(e.key)){e.preventDefault();advance();}
+});
+
+// Prevent nav buttons from triggering advance()
+['play-part3-btn','home-btn'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(!el) return;
+  el.addEventListener('click',e=>e.stopPropagation());
+  el.addEventListener('touchend',e=>{e.stopPropagation();},{passive:false});
 });
 
 goScene(0);

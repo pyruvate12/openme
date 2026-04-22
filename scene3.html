@@ -322,6 +322,45 @@ body::before {
 #home-btn:active {
   transform: scale(0.98);
 }
+#sound-splash {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 40% 60%, #fdf3ea, #ecdfd4);
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  transition: opacity 2.2s ease;
+  border-radius: 52px;
+}
+#sound-splash.on {
+  opacity: 1;
+  pointer-events: all;
+}
+#sound-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 1.2s ease 0.6s, transform 1.2s ease 0.6s;
+}
+#sound-splash.on #sound-content {
+  opacity: 1;
+  transform: scale(1);
+}
+.sound-item {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.sound-item.vis {
+  opacity: 1;
+  transform: translateY(0);
+}
 </style>
 </head>
 <body>
@@ -333,7 +372,15 @@ body::before {
   <div id="end-splash">
     <div id="splash-content">
       <div style="font: italic 20px/1.7 Georgia, serif; color: #7a6a60; text-align:center; padding: 0 24px;">the end 🎈</div>
-      <button id="home-btn" onclick="window.location.href='https://pyruvate12.github.io/openme/'" ontouchend="this._tapped=true;window.location.href='https://pyruvate12.github.io/openme/';">↩ Back to Home</button>
+      <div style="font: italic 14px/1.7 Georgia, serif; color: #9b928a; text-align:center; padding: 0 24px;">hey forgot abt sound ? , continue tapping...</div>
+    </div>
+  </div>
+  <div id="sound-splash">
+    <div id="sound-content">
+      <div class="sound-item" style="font: italic 18px/1.9 Georgia, serif; color: #7a6a60; text-align:center; padding: 0 24px;">can you hear it now ?</div>
+      <div class="sound-item" style="font: italic 16px/1.9 Georgia, serif; color: #9b928a; text-align:center; padding: 0 24px;">its the sound of silence</div>
+      <div class="sound-item" style="font: italic 16px/1.9 Georgia, serif; color: #b4647c; text-align:center; padding: 0 24px;">Its your day , enjoy it</div>
+      <button id="home-btn" class="sound-item" onclick="window.location.href='https://pyruvate12.github.io/openme/'" ontouchend="this._tapped=true;window.location.href='https://pyruvate12.github.io/openme/';">↩ Back to Home</button>
     </div>
   </div>
 </div>
@@ -560,7 +607,7 @@ body::before {
     document.querySelectorAll('.dot').forEach((d, j) => d.classList.toggle('on', j <= i));
     document.getElementById('sc' + i).classList.add('on');
     li = -1;
-    if (i === 3) pauseUntil = Date.now() + 3000;
+    pauseUntil = Date.now() + 2000;
     const t = setTimeout(showLine, 600);
     lineTimers.push(t);
   }
@@ -585,8 +632,29 @@ body::before {
     }
   }
 
+  let soundStep = 0;
+
+  function advanceSound() {
+    const items = document.querySelectorAll('#sound-content .sound-item');
+    if (soundStep < items.length) {
+      items[soundStep].classList.add('vis');
+      soundStep++;
+    }
+  }
+
   function handleAdvance(e) {
-    if (e.target.closest && (e.target.closest('#home-btn') || e.target.closest('#end-splash'))) return;
+    if (e.target.closest && e.target.closest('#home-btn')) return;
+    if (e.target.closest && e.target.closest('#sound-splash')) {
+      if (e.cancelable) e.preventDefault();
+      advanceSound();
+      return;
+    }
+    if (e.target.closest && e.target.closest('#end-splash')) {
+      if (e.cancelable) e.preventDefault();
+      const soundSplash = document.getElementById('sound-splash');
+      if (soundSplash) soundSplash.classList.add('on');
+      return;
+    }
     if (e.cancelable) e.preventDefault();
     advance();
   }

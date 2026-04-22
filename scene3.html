@@ -457,9 +457,50 @@ body::before {
         { t: '🎈 happy birthday 🎈', cls: 'hb', delay: 800, slow: true },
       ]
     },
+    {
+      lbl: '🏸',
+      svg: `<svg width="300" height="180" viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+        ${chr(72, 84, H, HD, 'smile', false)}
+        ${chr(228, 84, N, ND, 'smile', false)}
+        <g transform="translate(63, 100) rotate(-40)">
+          <rect x="-2" y="0" width="4" height="22" rx="2" fill="${HD}" opacity="0.78"/>
+          <ellipse cx="0" cy="-11" rx="11" ry="7.5" fill="none" stroke="${H}" stroke-width="1.5" opacity="0.85"/>
+        </g>
+        <g transform="translate(237, 100) rotate(40)">
+          <rect x="-2" y="0" width="4" height="22" rx="2" fill="${ND}" opacity="0.78"/>
+          <ellipse cx="0" cy="-11" rx="11" ry="7.5" fill="none" stroke="${N}" stroke-width="1.5" opacity="0.85"/>
+        </g>
+        <path d="M91 94 Q150 28 209 94" stroke="${BN}" stroke-width="0.7" fill="none" stroke-dasharray="3 3" opacity="0.32"/>
+        <ellipse cx="150" cy="50" rx="5" ry="3.5" fill="#f5e8d4" stroke="${BN}" stroke-width="0.8" opacity="0.85"/>
+        <line x1="148" y1="46.5" x2="146" y2="40" stroke="${BN}" stroke-width="0.8" opacity="0.55"/>
+        <line x1="150" y1="46.5" x2="150" y2="39" stroke="${BN}" stroke-width="0.8" opacity="0.55"/>
+        <line x1="152" y1="46.5" x2="154" y2="40" stroke="${BN}" stroke-width="0.8" opacity="0.55"/>
+        <line x1="30" y1="158" x2="270" y2="158" stroke="${BN}" stroke-width="0.8" opacity="0.5"/>
+      </svg>`,
+      lines: [
+        { t: 'those badminton and talks', cls: 'narr', delay: 0 },
+        { t: 'are some of best moments of my life in recent years.', cls: 'narr', delay: 0 },
+      ]
+    },
+    {
+      lbl: '',
+      svg: `<svg width="300" height="180" viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+        ${chr(112, 82, H, HD, 'smile', false)}
+        ${chr(178, 78, N, ND, 'smile', false)}
+        <line x1="50" y1="156" x2="260" y2="156" stroke="${BN}" stroke-width="0.8" opacity="0.45"/>
+        <circle cx="72" cy="153" r="2.5" fill="${BN}" opacity="0.35"/>
+        <circle cx="62" cy="149" r="1.8" fill="${BN}" opacity="0.22"/>
+        <circle cx="82" cy="149" r="1.8" fill="${BN}" opacity="0.22"/>
+        <path d="M122 62 Q137 52 150 60" stroke="${BN}" stroke-width="0.8" fill="none" opacity="0.35"/>
+        <path d="M166 60 Q179 52 190 61" stroke="${N}" stroke-width="0.8" fill="none" opacity="0.35"/>
+      </svg>`,
+      lines: [
+        { t: 'Thank you for all of them.', cls: 'hb', delay: 700, slow: true },
+      ]
+    },
   ];
 
-  let cur = 0, li = -1, busy = false;
+  let cur = 0, li = -1, busy = false, pauseUntil = 0;
   const stage = document.getElementById('stage');
   const dotsWrap = document.getElementById('dots');
   let lineTimers = [];
@@ -519,12 +560,14 @@ body::before {
     document.querySelectorAll('.dot').forEach((d, j) => d.classList.toggle('on', j <= i));
     document.getElementById('sc' + i).classList.add('on');
     li = -1;
+    if (i === 3) pauseUntil = Date.now() + 3000;
     const t = setTimeout(showLine, 600);
     lineTimers.push(t);
   }
 
   function advance() {
     if (busy) return;
+    if (Date.now() < pauseUntil) return;
     if (showLine()) return;
     if (cur < SCENES.length - 1) {
       busy = true;
@@ -542,12 +585,13 @@ body::before {
     }
   }
 
-  const wrap = document.getElementById('wrap');
-  wrap.addEventListener('click', advance);
-  wrap.addEventListener('touchend', e => {
-    e.preventDefault();
+  function handleAdvance(e) {
+    if (e.target.closest && (e.target.closest('#home-btn') || e.target.closest('#end-splash'))) return;
+    if (e.cancelable) e.preventDefault();
     advance();
-  }, { passive: false });
+  }
+  document.addEventListener('click', handleAdvance);
+  document.addEventListener('touchend', handleAdvance, { passive: false });
 
   document.addEventListener('keydown', e => {
     if (['Enter', ' ', 'ArrowRight'].includes(e.key)) {

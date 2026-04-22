@@ -184,27 +184,7 @@ body::before {
 }
 .dot.on{opacity:0.9;width:22px;background:#a08e7e;}
 
-#hint{
-  position:absolute;
-  bottom:18px;
-  left:50%;
-  transform:translateX(-50%);
-  font:10px/1 'Courier New',monospace;
-  letter-spacing:0.18em;
-  color:var(--mu);
-  background: rgba(255,250,242,0.5);
-  padding: 8px 22px;
-  border-radius: 40px;
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(200,180,160,0.2);
-  animation:breathe 3s ease-in-out infinite;
-  z-index:15;
-  transition:opacity 0.5s ease;
-  white-space:nowrap;
-  box-shadow: var(--shadow-soft);
-  text-transform: uppercase;
-}
-@keyframes breathe{ 0%,100%{opacity:0.5;letter-spacing:0.18em;} 55%{opacity:0.9;letter-spacing:0.28em;} }
+
 
 /* ----- END SPLASH OVERLAY (full screen) ----- */
 #end-splash {
@@ -323,7 +303,6 @@ svg {
   
   <div id="dots"></div>
   <div id="stage"></div>
-  <div id="hint">tap · click · space</div>
   <div id="end-splash">
     <div id="splash-content">
       <div id="splash-message">we all are imperfect<br>that's what makes us human</div>
@@ -519,7 +498,6 @@ const SCENES=[
 
 let cur=0, li=-1, busy=false;
 const stage=document.getElementById('stage');
-const hint=document.getElementById('hint');
 const dotsWrap=document.getElementById('dots');
 
 SCENES.forEach((_,i)=>{
@@ -570,7 +548,6 @@ function goScene(i){
     dia.innerHTML = currentScene.splashHtml;
     // hide hint and stop further clicks after a short delay
     setTimeout(() => {
-      hint.style.opacity = '0';
     }, 300);
   } else {
     setTimeout(showLine,550);
@@ -585,7 +562,6 @@ function advance(){
     document.getElementById('sc'+cur).classList.remove('on');
     setTimeout(()=>{cur++;busy=false;goScene(cur);},950);
   } else {
-    hint.style.opacity = '0';
     const endSplash = document.getElementById('end-splash');
     if (endSplash) {
       endSplash.classList.add('on');
@@ -593,8 +569,8 @@ function advance(){
   }
 }
 
-document.getElementById('wrap').addEventListener('click',advance);
-document.getElementById('wrap').addEventListener('touchend',e=>{e.preventDefault();advance();},{passive:false});
+document.addEventListener('click',advance);
+document.addEventListener('touchend',e=>{e.preventDefault();advance();},{passive:false});
 document.addEventListener('keydown',e=>{
   if(['Enter',' ','ArrowRight'].includes(e.key)){e.preventDefault();advance();}
 });
